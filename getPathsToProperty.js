@@ -28,7 +28,7 @@ const getPathsToProperty = (wrapperObjectForParameters) => {
 
         currentPropertyIsAMatch = false;
 
-        if (Object.prototype.toString.call(currentObject) === "[object Object]") {
+        if (typeof currentObject[currentKey] === 'object' && currentObject[currentKey] !== null) {
 
           let alreadyFound = false;
 
@@ -78,7 +78,15 @@ const getPathsToProperty = (wrapperObjectForParameters) => {
 
       if (currentPropertyIsAMatch) {
 
-        outputPaths.push("rootObject" + currentStack.stack + "." + currentKey);
+        const currentPath = "rootObject" + currentStack.stack + "." + currentKey;
+
+        if (wrapperObjectForParameters.onlyOnePath) {
+
+          return currentPath;
+
+        }
+
+        outputPaths.push(currentPath);
 
       }
 
